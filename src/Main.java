@@ -3,29 +3,48 @@ import java.util.ArrayList;
 
 public class Main {
 
-  public static final String RESET = "\u001B[0m"; 
-  public static final String AMARELO = "\u001B[33m"; 
-  public static final String VERDE = "\u001B[32m";
-  public static final String CIANO = "\u001B[36m";
+  public static String colorir(Object txt, String cor) {
+    final String RESET = "\u001B[0m"; 
+    final String AMARELO = "\u001B[33m"; 
+    final String VERDE = "\u001B[32m";
+    final String CIANO = "\u001B[36m";
 
-  public static void main(String[] args) {
+    String textoColorido = "";
 
-    ArrayList<Player> players = new ArrayList<Player>();
+    String corEscolhida = "";
+    switch (cor) {
+      case "verde":
+        corEscolhida = VERDE;
+        break;
+      case "amarelo":
+        corEscolhida = AMARELO;
+        break;
+      case "ciano":
+        corEscolhida = CIANO;
+        break;
+    }
+
+    textoColorido = corEscolhida + txt + RESET;
+
+    return textoColorido;
+  }
     
-    players.add(new Player("Neymar",          (byte) 95, (byte) 83));
-    players.add(new Player("Richarlisson",    (byte) 86, (byte) 17));
-    players.add(new Player("Rodrygo",         (byte) 90, (byte) 48));
-    players.add(new Player("Vini Jr",         (byte) 92, (byte) 83));
-    players.add(new Player("Tiquinho Soares", (byte) 87, (byte) 88));
-    players.add(new Player("Gabriel Jesus",   (byte) 69, (byte) 67));
-    players.add(new Player("Dimittri Payet",  (byte) 62, (byte) 87));
-    
-    PlayerAnalyzer panlz = new PlayerAnalyzer(players);
+  public static void main(String[] args) { 
+    // Analisador 
+    PlayerAnalyzer analyzer = new PlayerAnalyzer();
 
-    ArrayList<SimilarityPlayers> comparacoes = panlz.compararJogadores(players.get(0));
+    // Jogador Escolhido
+    Player choicedPlayer = analyzer.getPlayer(6);
+
+    // Jogador Escolhido comparado aos outros da lista
+    ArrayList<SimilarityPlayers> comparacoes = analyzer.compararJogadores(choicedPlayer);
+
+    // Os três jogadores mais parecidos com o jogador escolhido
+    SimilarityPlayers[] tresProx = analyzer.tresMaisProx(choicedPlayer);
     
     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
+    // Exibindo as comparações
     for (SimilarityPlayers comp : comparacoes) {
       Player p1 = comp.getP1(); 
       char firstLetterP1 = p1.getName().charAt(0);
@@ -35,30 +54,44 @@ public class Main {
 
       double similarity = comp.getSimilarity();
 
-      System.out.printf("%s%s%s (%s'%c'%s) em relação à %s%s%s (%s'%c'%s) possuem %s%.0f%%%s de similaridade: \n\n",
-        AMARELO, p1.getName(), RESET,
-        AMARELO, firstLetterP1, RESET,
-        VERDE, p2.getName(), RESET,
-        VERDE, firstLetterP2, RESET,
-        CIANO, similarity, RESET
+      System.out.printf("%s ('%s') em relação à %s ('%s') possuem %s de similaridade: \n\n",
+        colorir(p1.getName(), "amarelo"),
+        colorir(firstLetterP1, "amarelo"),
+        colorir(p2.getName(), "verde"),
+        colorir(firstLetterP2, "verde"),
+        colorir(String.format("%.0f%%", similarity), "ciano")
       );
 
-      System.out.printf("Passes:%s      %d%%%s(%s'%c'%s) | %s%d%%%s (%s'%c'%s)\n", 
-        AMARELO, p1.getPercPasses(), RESET,
-        AMARELO, firstLetterP1, RESET, 
-        VERDE, p2.getPercPasses(), VERDE,
-        VERDE, firstLetterP2, RESET
+      System.out.printf("Passes:      %s('%s') | %s ('%s')\n", 
+        colorir(p1.getPercPasses() + "%", "amarelo"),
+        colorir(firstLetterP1, "amarelo"), 
+        colorir(p2.getPercPasses() + "%", "verde"),
+        colorir(firstLetterP2, "verde")
       );
 
-      System.out.printf("Assitências:%s %d%%%s(%s'%c'%s) | %s%d%%%s (%s'%c'%s)\n",
-        AMARELO, p1.getPercAssists(), RESET,
-        AMARELO, firstLetterP1, RESET, 
-        VERDE, p2.getPercAssists(), RESET,
-        VERDE, firstLetterP2, RESET
+      System.out.printf("Assitências: %s('%s') | %s ('%s')\n",
+        colorir(p1.getPercAssists() + "%", "amarelo"),
+        colorir(firstLetterP1, "amarelo"), 
+        colorir(p2.getPercAssists() + "%", "verde"),
+        colorir(firstLetterP2, "verde")
       );
 
       System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
     }
+
+    // Exibindo os três vizinhos mais próximos com base em dois parâmetros
+    System.out.printf("\n<<<<< OS TRÊS JOGADORES MAIS PARECIDOS COM '%s' >>>>>\n", 
+      colorir(choicedPlayer.getName(), "amarelo")
+    );
+
+    for (SimilarityPlayers pl : tresProx) {
+      System.out.printf("    - '%s' com %s de similaridade\n",
+        colorir(pl.getP2().getName(), "verde"),
+        colorir(String.format("%.0f", pl.getSimilarity()) + "%", "ciano")
+      );
+    }
+
+    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
   }
 }
