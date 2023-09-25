@@ -1,4 +1,5 @@
 import classes.*;
+import utils.Reader;
 import java.util.ArrayList;
 
 public class Main {
@@ -30,7 +31,15 @@ public class Main {
   }
     
   public static void main(String[] args) { 
-    // Analisador 
+
+    try {
+      Reader.readFile("./src/database/data.csv");
+    } catch (Exception e) {
+      System.err.println(e);
+    }
+
+
+    /* // Analisador 
     PlayerAnalyzer analyzer = new PlayerAnalyzer();
 
     // Jogador Escolhido
@@ -91,7 +100,7 @@ public class Main {
       );
     }
 
-    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); */
 
   }
 }

@@ -1,9 +1,9 @@
-package classes;
+package utils;
 
-public class Teste {
+public abstract class Teste {
 
-    public static double simiCos(int[] attrOne, int[] attrTwo) {
-        int sumOneTwo = 0;
+    public static double simiCos(double[] attrOne, double[] attrTwo) {
+        double sumOneTwo = 0;
         double compriOne = 0, compriTwo = 0;
 
         for (int i = 0; i < attrOne.length; i++) {
@@ -20,4 +20,7 @@ public class Teste {
         return similarity;
     }
 
+    public static double simiMaht() {
+        return 0;
+    }
 }

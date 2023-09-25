@@ -11,10 +11,10 @@ public class PlayerAnalyzer {
   }
 
   public PlayerAnalyzer() {
-    this.preencheLista();
+    // this.preencheLista();
   }
 
-  private void preencheLista() {
+ /*  private void preencheLista() {
     ArrayList<Player> examplePlayers = new ArrayList<Player>();
     
     examplePlayers.add(new Player("Neymar",          (byte) 95, (byte) 83));
@@ -26,9 +26,9 @@ public class PlayerAnalyzer {
     examplePlayers.add(new Player("Dimittri Payet",  (byte) 62, (byte) 87));
 
     this.players = examplePlayers;
-  }
+  } */
 
-  public ArrayList<SimilarityPlayers> compararJogadores(Player player) {
+  /* public ArrayList<SimilarityPlayers> compararJogadores(Player player) {
     ArrayList<SimilarityPlayers> comparacoes = new ArrayList<SimilarityPlayers>();
 
     ArrayList<Player> playersCopy = this.getPlayers();
@@ -47,9 +47,9 @@ public class PlayerAnalyzer {
     }
     
     return comparacoes;
-  }
+  } */
 
-  public SimilarityPlayers[] tresMaisProx(Player player) {
+/*   public SimilarityPlayers[] tresMaisProx(Player player) {
     SimilarityPlayers[] tresMaisProximos = new SimilarityPlayers[3];
 
     Object[] comparacoes = this.compararJogadores(player).toArray();
@@ -61,7 +61,8 @@ public class PlayerAnalyzer {
 
     return tresMaisProximos;
   }
-
+ */
+ 
   public ArrayList<Player> getPlayers() {
     ArrayList<Player> playersCopy = new ArrayList<Player>();
 
