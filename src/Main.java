@@ -1,6 +1,5 @@
 import classes.*;
-import utils.Reader;
-import java.util.ArrayList;
+import utils.Teste;
 
 public class Main {
 
@@ -31,19 +30,33 @@ public class Main {
   }
     
   public static void main(String[] args) { 
-
-    try {
-      Reader.readFile("./src/database/data.csv");
-    } catch (Exception e) {
-      System.err.println(e);
-    }
-
-
-    /* // Analisador 
+    
+    // Analisador 
     PlayerAnalyzer analyzer = new PlayerAnalyzer();
 
     // Jogador Escolhido
-    Player choicedPlayer = analyzer.getPlayer(6);
+    Player choicedPlayer = analyzer.getPlayer(0);
+
+    double[] semelhancaCossenos = new double[10];
+    double[] semelhancaDistEuclidianas = new double[10];
+    double[] semelhancaDistMink = new double[10];
+
+    for (int i = 0; i < 10; i++) {
+      Player secondChoicedPlayer = analyzer.getPlayer(i + 1);
+
+      double simiCos   = Teste.simiCos(choicedPlayer.getParams(), secondChoicedPlayer.getParams());
+      double simiEucld = Teste.simiEucld(choicedPlayer.getParams(), secondChoicedPlayer.getParams()); 
+      double simiMink  = Teste.simiMink(choicedPlayer.getParams(), secondChoicedPlayer.getParams()); 
+
+      semelhancaCossenos[i] = simiCos;
+      semelhancaDistEuclidianas[i] = simiEucld;
+      semelhancaDistMink[i] = simiMink;
+    }
+
+
+
+
+    /*
 
     // Jogador Escolhido comparado aos outros da lista
     ArrayList<SimilarityPlayers> comparacoes = analyzer.compararJogadores(choicedPlayer);
