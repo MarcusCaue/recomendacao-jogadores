@@ -2,6 +2,7 @@ package utils;
 
 public abstract class Teste {
 
+    // Similaridade de Cossenos
     public static double simiCos(double[] attrOne, double[] attrTwo) {
         double sumOneTwo = 0;
         double compriOne = 0, compriTwo = 0;
@@ -20,6 +21,8 @@ public abstract class Teste {
         return similarity;
     }
 
+
+    // Similaridade segundo a Distância Euclidiana
     public static double simiEucld(double[] attrOne, double[] attrTwo) {
 
         double somatorioDistancias = 0;
@@ -35,6 +38,7 @@ public abstract class Teste {
         return distEucld;
     }
 
+    // Similaridade segundo a Distância de Minkwoski
     public static double simiMink(double[] attrOne, double[] attrTwo) {
         int quantParams = attrOne.length;
 
@@ -51,11 +55,30 @@ public abstract class Teste {
         return distMink;
     }
 
-
+    // Similaridade pelo Coeficiente de Correlação de Pearson
     public static double pearson(double[] attrOne, double[] attrTwo) {
+
+        int quantParams = attrOne.length;
+
+        double mediaOne = 0;
+        double mediaTwo = 0;
+        for (int i = 0; i < quantParams; i++) {
+            mediaOne += attrOne[i];
+            mediaTwo += attrTwo[i];
+        }
+
+        mediaOne /= quantParams;
+        mediaTwo /= quantParams;
+
+        double covariancia = 0;
+        double desvioPadrao = 0;
+
+        for (int i = 0; i < quantParams; i++) {
+            covariancia += (attrOne[i] - mediaOne) * (attrTwo[i] * mediaTwo);
+            desvioPadrao += (attrOne[i] - mediaOne) * (attrTwo[i] * mediaTwo);
+        }
+
         double coefPearson = 0;
-
-
 
         return coefPearson;
     }
