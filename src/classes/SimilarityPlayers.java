@@ -1,6 +1,8 @@
 package classes;
 
-public class SimilarityPlayers {
+import java.lang.Comparable;
+
+public class SimilarityPlayers implements Comparable<SimilarityPlayers> {
   Player p1;
   Player p2;
   double similarity;
@@ -8,6 +10,19 @@ public class SimilarityPlayers {
   public SimilarityPlayers(Player p1, Player p2) {
     this.p1 = p1;
     this.p2 = p2;
+  }
+
+  public int compareTo(SimilarityPlayers secondElement) {
+    double secondElementSimilarity = secondElement.getSimilarity();
+
+    double difference = secondElementSimilarity  - this.similarity;
+
+    if (difference < 0)
+      return -1;
+    else if (difference > 0)
+      return 1;
+    else
+      return 0;
   }
 
   public Player getP1() {
