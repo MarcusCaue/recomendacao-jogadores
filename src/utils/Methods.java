@@ -20,13 +20,22 @@ public abstract class Methods {
 
         return similarity;
     }
+    
+    // Cálculo da Similaridade segundo a Distância de Jaccard
+    public static double jaccard(double[] attrOne, double[] attrTwo) {
+        double[] commonElements = new double[20];
 
-<<<<<<< HEAD:src/utils/Methods.java
-    public static double simiTales(double[] attrOne, double[] attrTwo) {
-        
+        int quantParams = 10;
 
-        return 0;
-=======
+        for (int i = 0; i < quantParams; i++) {
+            commonElements[i] = attrOne[i];
+        }
+
+        for (int i = 10; i < quantParams; i++) {
+            commonElements[i] = attrOne[i];
+        }
+    }
+
 
     // Similaridade segundo a Distância Euclidiana
     public static double simiEucld(double[] attrOne, double[] attrTwo) {
@@ -39,7 +48,7 @@ public abstract class Methods {
 
         double distEucld = Math.sqrt(somatorioDistancias);
 
-        distEucld = distEucld / (1 + distEucld);
+        distEucld = distEucld  / (1 + distEucld);
 
         return distEucld;
     }
@@ -87,6 +96,5 @@ public abstract class Methods {
         double coefPearson = 0;
 
         return coefPearson;
->>>>>>> 1c4aa26680223cae0f2a321cb22c165f7eb92472:src/utils/Teste.java
     }
 }

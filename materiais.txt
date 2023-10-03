@@ -1,0 +1,3 @@
+- Algoritmos de simiaridade (Wikipedia): https://www.ufrgs.br/wiki-r/index.php?title=C%C3%A1lculo_de_similaridade
+
+- Slides "Medidas de Distância": https://www.facom.ufu.br/~elaine/disc/MFCD/Aula7-MedidasDistancia.pdf

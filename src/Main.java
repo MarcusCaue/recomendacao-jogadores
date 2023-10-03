@@ -1,5 +1,5 @@
 import classes.*;
-import utils.Teste;
+import utils.Methods;
 
 public class Main {
 
@@ -37,20 +37,15 @@ public class Main {
     // Jogador Escolhido
     Player choicedPlayer = analyzer.getPlayer(0);
 
-    double[] semelhancaCossenos = new double[10];
-    double[] semelhancaDistEuclidianas = new double[10];
-    double[] semelhancaDistMink = new double[10];
 
     for (int i = 0; i < 10; i++) {
       Player secondChoicedPlayer = analyzer.getPlayer(i + 1);
 
-      double simiCos   = Teste.simiCos(choicedPlayer.getParams(), secondChoicedPlayer.getParams());
-      double simiEucld = Teste.simiEucld(choicedPlayer.getParams(), secondChoicedPlayer.getParams()); 
-      double simiMink  = Teste.simiMink(choicedPlayer.getParams(), secondChoicedPlayer.getParams()); 
+      double[] paramsPlayerOne = choicedPlayer.getParams();
+      double[] paramsPlayerTwo = secondChoicedPlayer.getParams();
 
-      semelhancaCossenos[i] = simiCos;
-      semelhancaDistEuclidianas[i] = simiEucld;
-      semelhancaDistMink[i] = simiMink;
+      
+
     }
 
 
