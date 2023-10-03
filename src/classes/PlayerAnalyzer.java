@@ -2,6 +2,7 @@ package classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import utils.Reader;
 
 public class PlayerAnalyzer {
   ArrayList<Player> players;
@@ -11,22 +12,40 @@ public class PlayerAnalyzer {
   }
 
   public PlayerAnalyzer() {
-    // this.preencheLista();
+    this.preencheLista();
   }
 
- /*  private void preencheLista() {
+  private void preencheLista() {
     ArrayList<Player> examplePlayers = new ArrayList<Player>();
-    
-    examplePlayers.add(new Player("Neymar",          (byte) 95, (byte) 83));
-    examplePlayers.add(new Player("Richarlisson",    (byte) 86, (byte) 17));
-    examplePlayers.add(new Player("Rodrygo",         (byte) 90, (byte) 48));
-    examplePlayers.add(new Player("Vini Jr",         (byte) 92, (byte) 83));
-    examplePlayers.add(new Player("Tiquinho Soares", (byte) 87, (byte) 88));
-    examplePlayers.add(new Player("Gabriel Jesus",   (byte) 69, (byte) 67));
-    examplePlayers.add(new Player("Dimittri Payet",  (byte) 62, (byte) 87));
 
+    String[] content = {};
+
+    try {
+      content = Reader.readFile("./src/database/data.csv");
+    } catch (Exception e) {
+      System.err.println(e);
+    }
+
+    for (int i = 1; i < content.length; i++) {
+      String[] valuesStringForm = content[i].replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",,", ",").split(",");
+      
+      String name = valuesStringForm[0];
+      String team = valuesStringForm[1];
+
+      double[] values = new double[32];
+
+      for (int j = 0; j < 32; j++) {
+        values[j] = Double.parseDouble(valuesStringForm[j + 2]);
+      }
+
+      Player pl = new Player(name, team, values);
+
+      examplePlayers.add(pl);
+    }
+
+    
     this.players = examplePlayers;
-  } */
+  }
 
   /* public ArrayList<SimilarityPlayers> compararJogadores(Player player) {
     ArrayList<SimilarityPlayers> comparacoes = new ArrayList<SimilarityPlayers>();

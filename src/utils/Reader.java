@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public abstract class Reader {
   
-  public static void readFile(String path) throws IOException {
+  public static String[] readFile(String path) throws IOException {
 
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     String content = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
@@ -19,6 +19,7 @@ public abstract class Reader {
     String[] lines = content.split("\n");
     // String params = lines[0].replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",,", ",");
 
+<<<<<<< HEAD
     ArrayList<Player> players = new ArrayList<Player>();
 
     for (int i = 1; i < lines.length; i++) {
@@ -43,6 +44,9 @@ public abstract class Reader {
     System.out.println(similaridade);
 
 
+=======
+    return lines;
+>>>>>>> 1c4aa26680223cae0f2a321cb22c165f7eb92472
   }
 
 
