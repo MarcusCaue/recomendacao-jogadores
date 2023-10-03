@@ -38,7 +38,7 @@ public abstract class Reader {
       players.add(pl);
     }
 
-    double similaridade = Teste.simiCos(players.get(0).getParams(), players.get(107).getParams());
+    double similaridade = Methods.simiCos(players.get(0).getParams(), players.get(107).getParams());
 
     System.out.println(similaridade);
 

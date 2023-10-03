@@ -1,6 +1,6 @@
 package utils;
 
-public abstract class Teste {
+public abstract class Methods {
 
     public static double simiCos(double[] attrOne, double[] attrTwo) {
         double sumOneTwo = 0;
@@ -20,7 +20,9 @@ public abstract class Teste {
         return similarity;
     }
 
-    public static double simiMaht() {
+    public static double simiTales(double[] attrOne, double[] attrTwo) {
+        
+
         return 0;
     }
 }
