@@ -1,25 +1,45 @@
-def readFile(filename: str):
+from classes import Player # type: ignore
+
+def readFile(filename: str) -> dict[str, Player]:
   data = {}
   
   with open(filename, "r", encoding="utf8") as arq:
     lines = arq.readlines()
     
     for i in range(1, 6):
-      player = lines[i].replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",,", ",").split(",")
+      playerDataStr = lines[i].replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".").split("\t")
       
-      player_data = []
-      for d in player[2:]:
-        player_data.append(int(d))
+      playerData = []
+      for d in playerDataStr[2:]:
+        playerData.append(float(d))
       
-      data[player[0]] = player_data
+      data[playerDataStr[0]] = Player(playerDataStr[0], playerDataStr[1], playerData)
       
   return data
     
+def calculaDesempenho(playerData: list[float]):
+  soma = sum(playerData)
+  quant = len(playerData)
+  return soma / quant
 
-def jaccard(a, b):
+# Semelhança pela divisão das médias dos dados
+def simiMedia(d1: float, d2: float):
+  # O quanto que D1 está para D2
+  return d1 / d2
 
-  common_elements = a[::]
+# Semelhança de Cossenos
+def simiCos(pd1: list[float], pd2: list[float]):
+  comprimentoPrimeiro = comprimentoSegundo = somatorioDados = 0
   
-  
-  print(common_elements)
-  
+  for i in range(len(pd1)):
+    somatorioDados += pd1[i] * pd2[i]
+    comprimentoPrimeiro += pd1[i] ** 2
+    comprimentoSegundo += pd2[i] ** 2
+
+  comprimentoPrimeiro **= 1/2
+  comprimentoSegundo **= 1/2
+
+  semelhanca = somatorioDados / (comprimentoPrimeiro * comprimentoSegundo)
+
+  return semelhanca
+
