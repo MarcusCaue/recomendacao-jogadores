@@ -1,12 +1,13 @@
 import functions as fc
-from classes import Player  # type: ignore
+from classes import Player 
 
 players = fc.readFile("./testing-algorithms-python/database/data.tsv")
 
-primeiroJogador = players.get("Rodrygo")
-segundoJogador = players.get("Neymar")
+jogadorEscolhido = input("Nome do jogador: ")
 
-print(f"Dados de {primeiroJogador.nome} => {primeiroJogador.dados}")
-print(f"Dados de {segundoJogador.nome} => {segundoJogador.dados}")
+primeiroJogador = players.get(jogadorEscolhido)
 
-print(f"\nSemelhança entre eles: {fc.simiCos(primeiroJogador.dados, segundoJogador.dados)}")
+for k,v in players.items():
+    segundoJogador = v
+
+    print(f"'{primeiroJogador.nome}' em relação à '{k}' tem a seguinte semelhança: {fc.simiCos(primeiroJogador.dados, v.dados)}\n")

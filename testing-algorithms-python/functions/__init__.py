@@ -1,23 +1,36 @@
 from classes import Player # type: ignore
 
-def readFile(filename: str) -> dict[str, Player]:
+# Leitura do arquivo, obtenção e formatação dos dados
+def readFile(filename: str) -> "dict[str, Player]":
+  # Dados dos jogadores selecionados
   data = {}
   
+  # Leitura do arquivo
   with open(filename, "r", encoding="utf8") as arq:
     lines = arq.readlines()
     
-    for i in range(1, 6):
-      playerDataStr = lines[i].replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".").split("\t")
+    # Lendo dados dos jogadores
+    for i in range(1, len(lines)):
+      # Dados na forma de string
+      playerDataStr = formatString(lines[i]).split("\t")
       
-      playerData = []
-      for d in playerDataStr[2:]:
-        playerData.append(float(d))
-      
-      data[playerDataStr[0]] = Player(playerDataStr[0], playerDataStr[1], playerData)
+      # Dados convertidos para números
+      playerData = list(map(float, playerDataStr[2:12]))
+
+      playerName = playerDataStr[0]
+      playerTeam = playerDataStr[1]
+
+      # Adicionando um novo jogador à coleção de jogadores
+      data[playerName] = Player(playerName, playerTeam, playerData)
       
   return data
-    
-def calculaDesempenho(playerData: list[float]):
+
+
+def formatString(string: str) -> str:
+  return string.replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".")
+
+
+def calculaDesempenho(playerData: "list[float]"):
   soma = sum(playerData)
   quant = len(playerData)
   return soma / quant
@@ -27,14 +40,14 @@ def simiMedia(d1: float, d2: float):
   # O quanto que D1 está para D2
   return d1 / d2
 
-# Semelhança de Cossenos
-def simiCos(pd1: list[float], pd2: list[float]):
+# Semelhança por Cosseno
+def simiCos(attrOne: "list[float]", attrTwo: "list[float]"):
   comprimentoPrimeiro = comprimentoSegundo = somatorioDados = 0
   
-  for i in range(len(pd1)):
-    somatorioDados += pd1[i] * pd2[i]
-    comprimentoPrimeiro += pd1[i] ** 2
-    comprimentoSegundo += pd2[i] ** 2
+  for i in range(len(attrOne)):
+    somatorioDados += attrOne[i] * attrTwo[i]
+    comprimentoPrimeiro += attrOne[i] ** 2
+    comprimentoSegundo += attrTwo[i] ** 2
 
   comprimentoPrimeiro **= 1/2
   comprimentoSegundo **= 1/2
