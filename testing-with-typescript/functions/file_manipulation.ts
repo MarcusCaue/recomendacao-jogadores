@@ -1,6 +1,5 @@
-import { readFileSync } from "fs"
+import { readFileSync, writeFileSync } from "fs"
 import Result from "../classes/Result"
-import Player from "../classes/Player"
 
 export function readFile(path: string, filename: string) {
   const data = readFileSync(path + filename, { encoding: "utf-8" }).replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".")
@@ -8,26 +7,13 @@ export function readFile(path: string, filename: string) {
 }
 
 export function saveResult(path: string, filename: string, data: Result[]) {
-  
-}
+  const file = path + filename
 
-export function generatePlayers(data: string) {
-  const lines = data.split("\n")
-  
-  const players: Player[] = []
+  let stringFormatData = "Jogador Referência,Jogador Comparado,Resultado\n"
+  data.forEach(result => {
+    const stringFormatResult = `${result.referencePlayer.name},${result.comparedPlayer.name},${result.result}\n`
+    stringFormatData += stringFormatResult
+  })
 
-  // lines.length
-  for (let i = 1; i < 11; i++) {
-    const dataPlayer = lines[i].split("\t")
-    
-    const name = dataPlayer[0]
-    const team = dataPlayer[1]
-    const values = dataPlayer.slice(2).map(v => parseFloat(v))
-
-    const pl = new Player(name, team, values)
-
-    players.push(pl)
-  }
-
-  return players
+  writeFileSync(file, stringFormatData)
 }
