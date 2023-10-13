@@ -1,4 +1,4 @@
-from classes import Player # type: ignore
+from classes import Player, Result # type: ignore
 
 # Leitura do arquivo, obtenção e formatação dos dados
 def readFile(filename: str) -> "dict[str, Player]":
@@ -26,6 +26,12 @@ def readFile(filename: str) -> "dict[str, Player]":
   return data
 
 
+def saveResult(filename: str, data: list[Result]) -> None:
+  with open("./testing-algorithms-python/results/" + filename, "w", encoding="utf8") as arq:
+    arq.write("Jogador Referência,Jogador Comparado,Resultado\n")
+    for d in data:
+      arq.write(f"{d.primeiroJogador.nome},{d.segundoJogador.nome},{d.valor}\n")
+
 def formatString(string: str) -> str:
   return string.replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".")
 
@@ -41,7 +47,7 @@ def simiMedia(d1: float, d2: float):
   return d1 / d2
 
 # Semelhança por Cosseno
-def simiCos(attrOne: "list[float]", attrTwo: "list[float]"):
+def simiCos(attrOne: "list[float]", attrTwo: "list[float]") -> float:
   comprimentoPrimeiro = comprimentoSegundo = somatorioDados = 0
   
   for i in range(len(attrOne)):

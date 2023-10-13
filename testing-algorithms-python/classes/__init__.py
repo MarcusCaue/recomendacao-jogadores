@@ -8,5 +8,10 @@ class Player:
     self.nome = nome
     self.time = time
     self.dados = dados
-    
+  
+class Result:
+  def __init__(self, primeiroJogador: Player, segundoJogador: Player, valor: float):
+    self.primeiroJogador = primeiroJogador
+    self.segundoJogador = segundoJogador
+    self.valor = valor
 

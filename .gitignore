@@ -1,4 +1,6 @@
 __pycache__
+*.pyc
+*.cpython-39.pyc
 
 # Compiled class file
 *.class
