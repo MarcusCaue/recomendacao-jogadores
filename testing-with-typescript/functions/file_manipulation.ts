@@ -3,7 +3,7 @@ import Result from "../classes/Result"
 
 export function readFile(path: string, filename: string) {
   const data = readFileSync(path + filename, { encoding: "utf-8" }).replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".")
-  return data
+  return data.split("\n")
 }
 
 export function saveResult(path: string, filename: string, data: Result[]) {
