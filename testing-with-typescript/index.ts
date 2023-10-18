@@ -12,12 +12,11 @@ const rodrygo = players[0]
 // Jogadores a serem comparados com o Referência
 const otherPlayers = players.slice(1)
 
-// const simiCosResults = generateResults(rodrygo, otherPlayers, alg.simiCos)
+// const simiCosResults = fc.generateResults(rodrygo, otherPlayers, alg.simiCos)
 // const simiMediaResults = fc.generateResults(rodrygo, otherPlayers, alg.simiMedia)
-
-const simiDistEucldResults = fc.generateResults(rodrygo, otherPlayers, alg.distEucld)
+// const simiDistEucldResults = fc.generateResults(rodrygo, otherPlayers, alg.distEucld)
 
 console.log();
 
 // Gerando o arquivo de resultados
-// saveResult("./results/", "similaridade_media_attr.csv", simiMediaResults)
+// saveResult("./results/", "similaridade_media_attr.tsv", simiMediaResults)

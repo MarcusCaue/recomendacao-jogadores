@@ -9,9 +9,9 @@ export function readFile(path: string, filename: string) {
 export function saveResult(path: string, filename: string, data: Result[]) {
   const file = path + filename
 
-  let stringFormatData = "Jogador Referência,Jogador Comparado,Resultado\n"
+  let stringFormatData = "Jogador Referência\tJogador Comparado\tResultado\n"
   data.forEach(result => {
-    const stringFormatResult = `${result.referencePlayer.name},${result.comparedPlayer.name},${result.result}\n`
+    const stringFormatResult = `${result.referencePlayer.name}\t${result.comparedPlayer.name}\t${result.result}\n`
     stringFormatData += stringFormatResult
   })
 

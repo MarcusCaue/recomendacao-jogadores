@@ -42,13 +42,13 @@ export function simiMedia(attrOne : number[], attrTwo : number[]) {
 export function distEucld(attrOne : number[], attrTwo : number[]) {
   // Será desconsiderado: "Minutos Jogados"
 
-  const attrOneWithoutMin = attrOne.slice(1)
-  const attrTwoWithoutMin = attrTwo.slice(1)
+  const attrOneWithoutMinutes = attrOne.slice(1)
+  const attrTwoWithoutMinutes = attrTwo.slice(1)
 
   let sumQuadDiffAttr = 0
 
-  for (let i = 0; i < attrOneWithoutMin.length; i++) {
-    sumQuadDiffAttr += (attrOneWithoutMin[i] - attrTwoWithoutMin[i]) ** 2
+  for (let i = 0; i < attrOneWithoutMinutes.length; i++) {
+    sumQuadDiffAttr += (attrOneWithoutMinutes[i] - attrTwoWithoutMinutes[i]) ** 2
   }
 
   const distEucld = sumQuadDiffAttr ** 1/2
