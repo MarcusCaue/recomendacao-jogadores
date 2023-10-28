@@ -33,3 +33,24 @@ export function generatePlayers(data: string[]) {
 
   return players
 }
+
+export function getDefensiveParams(params: number[]) {
+
+  /**
+   * Índices no array de atributos do jogador, referenciado aqui pelo parâmetro "params":
+   * 
+   * 5 => Duelos defensivos
+   * 6 => Duelos áereos ganhos
+   * 7 => Interseções
+   * 21 => Passes certos
+   * 23 => Passes para trás certos
+   * 27 => Passes inteligentes certos
+   * 30 => Passes em profundidade certos
+  */
+ 
+  const defParams = [
+    params[5], params[6], params[7], params[21], params[23], params[27], params[30],
+  ]
+
+  return defParams
+}

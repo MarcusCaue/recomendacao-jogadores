@@ -8,4 +8,6 @@ export default class Player {
     this.team = team
     this.data = data
   }
+
+  public clone() { return new Player(this.name, this.team, this.data) }
 }

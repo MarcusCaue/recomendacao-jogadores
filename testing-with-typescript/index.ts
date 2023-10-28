@@ -12,11 +12,17 @@ const rodrygo = players[0]
 // Jogadores a serem comparados com o Referência
 const otherPlayers = players.slice(1)
 
-// const simiCosResults = fc.generateResults(rodrygo, otherPlayers, alg.simiCos)
-// const simiMediaResults = fc.generateResults(rodrygo, otherPlayers, alg.simiMedia)
-// const simiDistEucldResults = fc.generateResults(rodrygo, otherPlayers, alg.distEucld)
+// Considerando apenas os parâmetros defensivos dos jogadores
+rodrygo.data = fc.getDefensiveParams(rodrygo.data)
+otherPlayers.forEach(pl => pl.data = fc.getDefensiveParams(pl.data))
+
+const simiCosResults = fc.generateResults(rodrygo, otherPlayers, alg.simiCos)
+const simiMediaResults = fc.generateResults(rodrygo, otherPlayers, alg.simiMedia)
+const simiDistEucldResults = fc.generateResults(rodrygo, otherPlayers, alg.distEucld)
 
 console.log();
 
 // Gerando o arquivo de resultados
-// saveResult("./results/", "similaridade_media_attr.tsv", simiMediaResults)
+saveResult("./results/defensive-params/", "similaridade_media_attr.tsv", simiMediaResults)
+saveResult("./results/defensive-params/", "similaridade_cossenos.tsv", simiCosResults)
+saveResult("./results/defensive-params/", "similaridade_dist_euclidiana.tsv", simiDistEucldResults)

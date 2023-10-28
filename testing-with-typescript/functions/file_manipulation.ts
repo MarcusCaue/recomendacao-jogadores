@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs"
 import Result from "../classes/Result"
 
 export function readFile(path: string, filename: string) {
-  const data = readFileSync(path + filename, { encoding: "utf-8" }).replace("\"", "").replace("Golos", "Gols").replace(" %", "").replace(",", ".")
+  const data = readFileSync(path + filename, { encoding: "utf-8" }).replaceAll("\"", "").replaceAll("Golos", "Gols").replaceAll(" %", "").replaceAll(",", ".")
   return data.split("\n")
 }
 

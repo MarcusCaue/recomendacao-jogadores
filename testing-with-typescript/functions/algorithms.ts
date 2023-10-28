@@ -20,16 +20,10 @@ export function simiCos(attrOne : number[], attrTwo : number[]) {
 
 // Similirade pela Média dos Atributos
 export function simiMedia(attrOne : number[], attrTwo : number[]) {
-  // Desempenho Geral => Média dos atributos do jogador, desconsiderando:
-  //    - Minutos jogados e Altura 
-
-  // Removendo os minutos e a altura
-  const attrOneWithoutMinAlt = attrOne.filter((_v, i) => i !== 0 && i !== 4)
-  const attrTwoWithoutMinAlt = attrTwo.filter((_v, i) => i !== 0 && i !== 4)
 
   // Calculando o desempenho geral
-  const desempenhoPlayerOne = attrOneWithoutMinAlt.reduce((acc, value) => acc + value) / attrOneWithoutMinAlt.length
-  const desempenhoPlayerTwo = attrTwoWithoutMinAlt.reduce((acc, value) => acc + value) / attrTwoWithoutMinAlt.length
+  const desempenhoPlayerOne = attrOne.reduce((acc, value) => acc + value) / attrOne.length
+  const desempenhoPlayerTwo = attrTwo.reduce((acc, value) => acc + value) / attrTwo.length
 
   // Comparar o primeiro jogador em relação ao segundo
   // Ex.: O quanto que Rodrygo está para Neymar, para Gabriel Jesus, para Richarlisson, etc.
@@ -40,15 +34,10 @@ export function simiMedia(attrOne : number[], attrTwo : number[]) {
 
 // Distância Euclidiana
 export function distEucld(attrOne : number[], attrTwo : number[]) {
-  // Será desconsiderado: "Minutos Jogados"
-
-  const attrOneWithoutMinutes = attrOne.slice(1)
-  const attrTwoWithoutMinutes = attrTwo.slice(1)
-
   let sumQuadDiffAttr = 0
 
-  for (let i = 0; i < attrOneWithoutMinutes.length; i++) {
-    sumQuadDiffAttr += (attrOneWithoutMinutes[i] - attrTwoWithoutMinutes[i]) ** 2
+  for (let i = 0; i < attrOne.length; i++) {
+    sumQuadDiffAttr += (attrOne[i] - attrTwo[i]) ** 2
   }
 
   const distEucld = sumQuadDiffAttr ** 1/2
