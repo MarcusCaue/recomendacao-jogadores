@@ -1,6 +1,7 @@
 import { readFile, saveResult } from "./functions/file_manipulation"
 import * as alg from "./functions/algorithms"
 import * as fc from "./functions/other"
+import Player from "./classes/Player"
 
 // Dados em forma de string
 const data = readFile("./database/", "data.tsv")
@@ -13,16 +14,20 @@ const rodrygo = players[0]
 const otherPlayers = players.slice(1)
 
 // Considerando apenas os parâmetros defensivos dos jogadores
-rodrygo.data = fc.getDefensiveParams(rodrygo.data)
-otherPlayers.forEach(pl => pl.data = fc.getDefensiveParams(pl.data))
+// const defParamsRodrygo = new Player(rodrygo.name, rodrygo.team, fc.getDefensiveParams(rodrygo))
+// const defParamsOtherPl = otherPlayers.map(pl => new Player(pl.name, pl.team, fc.getDefensiveParams(pl)))
 
-const simiCosResults = fc.generateResults(rodrygo, otherPlayers, alg.simiCos)
-const simiMediaResults = fc.generateResults(rodrygo, otherPlayers, alg.simiMedia)
-const simiDistEucldResults = fc.generateResults(rodrygo, otherPlayers, alg.distEucld)
+// Considerando apenas os parâmetros ofensivos dos jogadores
+const offenParamsRodrygo = new Player(rodrygo.name, rodrygo.team, fc.getOffensiveParams(rodrygo))
+const offenParamsOtherPl = otherPlayers.map(pl => new Player(pl.name, pl.team, fc.getOffensiveParams(pl)))
+
+const simiCosResults = fc.generateResults(offenParamsRodrygo, offenParamsOtherPl, alg.simiCos)
+const simiMediaResults = fc.generateResults(offenParamsRodrygo, offenParamsOtherPl, alg.simiMedia)
+const simiDistEucldResults = fc.generateResults(offenParamsRodrygo, offenParamsOtherPl, alg.distEucld)
 
 console.log();
 
 // Gerando o arquivo de resultados
-saveResult("./results/defensive-params/", "similaridade_media_attr.tsv", simiMediaResults)
-saveResult("./results/defensive-params/", "similaridade_cossenos.tsv", simiCosResults)
-saveResult("./results/defensive-params/", "similaridade_dist_euclidiana.tsv", simiDistEucldResults)
+saveResult("./results/offensive-params/", "simi_media.tsv", simiMediaResults)
+saveResult("./results/offensive-params/", "simi_cos.tsv", simiCosResults)
+saveResult("./results/offensive-params/", "simi_eucld.tsv", simiDistEucldResults)
