@@ -1,9 +1,10 @@
 # O que fazer
 
-() - Documentar o método `Similaridade pela Média`
-() - Documentar `Distância Euclidiana`
-() - Testar os métodos com apenas `alguns parâmetros`
-    - Só defensivos, só ofensivos, etc.
+- Customizar os parâmetros;
+    - Verificar os pesos dos parâmetros;
+- Testar com os novos conjuntos de dados;
+- Criar mais exemplos (2 parâmetros, 4, 8, etc.);
+- Testar algum algoritmo de trigonometria;
 
 # Materiais de Pesquisa
 - `Algoritmos de similaridade` (Wikipedia): https://www.ufrgs.br/wiki-r/index.php?title=C%C3%A1lculo_de_similaridade

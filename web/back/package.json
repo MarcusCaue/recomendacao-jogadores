@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx ./index.ts",
+    "dev": "tsx ./index.ts --watch",
     "test": "tsx ./test.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^20.8.5",
+    "@types/node": "^20.8.10",
+    "fastify": "^4.24.3",
     "tsx": "^3.13.0",
     "typescript": "^5.2.2"
   }
