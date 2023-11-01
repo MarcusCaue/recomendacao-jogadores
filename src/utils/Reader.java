@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public abstract class Reader {
   
-  public static void readFile(String path) throws IOException {
+  public static String[] readFile(String path) throws IOException {
 
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     String content = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
@@ -38,11 +38,11 @@ public abstract class Reader {
       players.add(pl);
     }
 
-    double similaridade = Teste.simiCos(players.get(0).getParams(), players.get(107).getParams());
+    double similaridade = Methods.simiCos(players.get(0).getParams(), players.get(107).getParams());
 
     System.out.println(similaridade);
 
-
+    return lines;
   }
 
 

@@ -1,6 +1,5 @@
 import classes.*;
-import utils.Reader;
-import java.util.ArrayList;
+import utils.Methods;
 
 public class Main {
 
@@ -31,19 +30,28 @@ public class Main {
   }
     
   public static void main(String[] args) { 
-
-    try {
-      Reader.readFile("./src/database/data.csv");
-    } catch (Exception e) {
-      System.err.println(e);
-    }
-
-
-    /* // Analisador 
+    
+    // Analisador 
     PlayerAnalyzer analyzer = new PlayerAnalyzer();
 
     // Jogador Escolhido
-    Player choicedPlayer = analyzer.getPlayer(6);
+    Player choicedPlayer = analyzer.getPlayer(0);
+
+
+    for (int i = 0; i < 10; i++) {
+      Player secondChoicedPlayer = analyzer.getPlayer(i + 1);
+
+      double[] paramsPlayerOne = choicedPlayer.getParams();
+      double[] paramsPlayerTwo = secondChoicedPlayer.getParams();
+
+      
+
+    }
+
+
+
+
+    /*
 
     // Jogador Escolhido comparado aos outros da lista
     ArrayList<SimilarityPlayers> comparacoes = analyzer.compararJogadores(choicedPlayer);
