@@ -1,9 +1,42 @@
 import { FastifyInstance } from "fastify";
+import { readFile } from "../functions/file_manipulation"
+import * as fc from "../functions/other"
+import * as alg from "../functions/algorithms"
+
+
+// Dados dos jogadores em forma de string
+const data = readFile("./database/", "data.tsv")
+// Gerando objetos do tipo Player
+const players = fc.generatePlayers(data)
+// Algoritmos de similaridade e distância
+const algorithms = [ alg.simiCos, alg.distEucld, alg.simiMedia ]
+
 
 export async function routes(server: FastifyInstance) {
-    server.get("/hello", async () => {
-        return {
-            message: "Olá mundo!"
-        }
-    })
+  server.get("/hello", async () => {
+    return {
+      message: "Olá mundo!"
+    }
+  })
+
+  // Retorna todos os jogadores
+  server.get("/players", async () => {
+    return players
+  })
+
+  server.get("/players/:idAlg/:idReferencia", async (request) => {
+    let { idAlg, idReferencia } = request.params
+
+    idAlg = parseInt(idAlg); idReferencia = parseInt(idReferencia);
+
+    const choicedAlg = algorithms[idAlg]
+    const referencePlayer = players[idReferencia]
+    const otherPlayers = players.filter(pl => pl.name !== referencePlayer.name)
+
+    const results = fc.generateResults(referencePlayer, otherPlayers, choicedAlg)
+
+    return results
+  })
+
+
 }
