@@ -24,6 +24,7 @@ export async function routes(server: FastifyInstance) {
     return players
   })
 
+  // Roda o algoritmo com um jogador
   server.get("/players/:idAlg/:idReferencia", async (request) => {
     let { idAlg, idReferencia } = request.params
 
@@ -36,6 +37,11 @@ export async function routes(server: FastifyInstance) {
     const results = fc.generateResults(referencePlayer, otherPlayers, choicedAlg)
 
     return results
+  })
+
+  // Retorna o cabeçalho (nome das colunas) da base de dados
+  server.get("/players/header", async () => {
+    return data[0].split("\t")
   })
 
 

@@ -18,7 +18,6 @@ export function generateResults(referencePlayer: Player, comparedPlayers: Player
 export function generatePlayers(data: string[]) {  
   const players: Player[] = []
 
-  // lines.length
   for (let i = 1; i < data.length; i++) {
     const dataPlayer = data[i].split("\t")
     
