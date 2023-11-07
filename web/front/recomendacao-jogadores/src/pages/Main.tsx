@@ -1,15 +1,7 @@
-import axios from "axios"
+import { api } from "../tools/axios"
+import { Player } from "../interfaces/Player"
 import { useEffect, useState } from "react"
-
-const api = axios.create({
-  baseURL: "http://localhost:2102/"
-})
-
-interface Player {
-  name: string
-  team: string
-  data: number[]
-}
+import { Link } from "react-router-dom"
 
 export default function Main() {
   const [players, setPlayers] = useState<Player[]>([])
@@ -22,9 +14,11 @@ export default function Main() {
 
   return (
     <>
-      <p className="text-center p-3 fs-5"> Clique <a href="#">aqui</a> para aplicar os filtros. </p>
+      <p className="text-center p-3 fs-5"> 
+        Clique <Link to="/players/filter">aqui</Link> para aplicar os filtros. 
+      </p>
 
-      <section className="players-table">
+      <section className="players-table overflow-x-auto">
         <table className="table table-dark table-striped table-bordered rounded-2 text-center align-middle">
           <thead>
             <tr className="align-middle">
@@ -32,7 +26,7 @@ export default function Main() {
               {header.map((h, index) => <th scope="col" key={index}> {h} </th>)}
             </tr>
           </thead>
-          <tbody className="table-hover">
+          <tbody className="table-hover table-group-divider">
             {
               players.map((pl, index) => {
                 return (

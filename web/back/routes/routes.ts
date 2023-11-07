@@ -21,7 +21,7 @@ export async function routes(server: FastifyInstance) {
 
   // Retorna todos os jogadores
   server.get("/players", async () => {
-    return players
+    return players.slice(0, 10)
   })
 
   // Roda o algoritmo com um jogador
