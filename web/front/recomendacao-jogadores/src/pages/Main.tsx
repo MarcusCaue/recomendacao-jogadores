@@ -14,19 +14,21 @@ export default function Main() {
 
   return (
     <>
-      <p className="text-center p-3 fs-5"> 
-        Clique <Link to="/players/filter">aqui</Link> para aplicar os filtros. 
+      <p className="text-center my-5 text-xl"> 
+        Clique <Link className="underline hover:text-green-600" to="/players/filter">aqui</Link> para aplicar os filtros. 
       </p>
 
-      <section className="players-table overflow-x-auto">
-        <table className="table table-dark table-striped table-bordered rounded-2 text-center align-middle">
+      <section className="overflow-x-auto">
+        <h2 className="text-xl font-bold text-center"> Lista da base de Jogadores Atacantes </h2>
+        <hr className="text-red-700"/>
+        <table className="">
           <thead>
-            <tr className="align-middle">
+            <tr className="">
               <th> # </th>
               {header.map((h, index) => <th scope="col" key={index}> {h} </th>)}
             </tr>
           </thead>
-          <tbody className="table-hover table-group-divider">
+          <tbody className="">
             {
               players.map((pl, index) => {
                 return (
