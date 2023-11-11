@@ -21,7 +21,7 @@ export async function routes(server: FastifyInstance) {
 
   // Retorna todos os jogadores
   server.get("/players", async () => {
-    return players.slice(0, 10)
+    return players.slice(0, 100)
   })
 
   // Roda o algoritmo com um jogador
@@ -41,7 +41,7 @@ export async function routes(server: FastifyInstance) {
 
   // Retorna o cabeçalho (nome das colunas) da base de dados
   server.get("/players/header", async () => {
-    return data[0].split("\t")
+    return data[0].replaceAll(".", "").split("\t")
   })
 
 
