@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { readFile } from "../functions/file_manipulation"
 import * as fc from "../functions/other"
 import * as alg from "../functions/algorithms"
+import { z } from "zod"
 
 
 // Dados dos jogadores em forma de string
@@ -11,6 +12,7 @@ const players = fc.generatePlayers(data)
 // Algoritmos de similaridade e distância
 const algorithms = [ alg.simiCos, alg.distEucld, alg.simiMedia ]
 
+let body = {}
 
 export async function routes(server: FastifyInstance) {
   server.get("/hello", async () => {
@@ -42,6 +44,20 @@ export async function routes(server: FastifyInstance) {
   // Retorna o cabeçalho (nome das colunas) da base de dados
   server.get("/players/header", async () => {
     return data[0].replaceAll(".", "").split("\t")
+  })
+
+  server.get("/players/result", async (request, reply) => {
+    
+    reply.redirect("http://localhost:5173/")
+    
+    
+  })
+
+  server.post("/players/filter", async (request) => {
+
+    const data = request.body
+    body = data
+
   })
 
 

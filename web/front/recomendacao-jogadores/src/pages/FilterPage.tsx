@@ -1,6 +1,45 @@
 import { api } from "../tools/axios"
 import { Player } from "../interfaces/Player"
-import { useEffect, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
+
+const sendForm = async (e: FormEvent) => {
+  e.preventDefault()
+  const form = document.getElementById("filterForm")
+
+  const referencePlayer = parseInt(form?.querySelector("[name=referencePlayer]")?.value)
+  const otherPlayers = []
+  
+  form?.querySelectorAll("[name=otherPlayers]").forEach(item => {
+    if (item.checked) {
+      otherPlayers.push(parseInt(item.value))
+    }
+  })
+
+  const params = []
+  form?.querySelectorAll("[name=params]").forEach(item => {
+    if (item.checked) {
+      params.push(parseInt(item.value))
+    }
+  })
+
+  const algId = parseInt(form?.querySelector("[name=algId]")?.value)
+
+  const requestBody = {
+    referencePlayer,
+    otherPlayers,
+    params,
+    algId
+  }
+
+  const res = await api.post("/players/filter", requestBody)
+
+  console.log(res)
+
+  window.location.href = "http://localhost:2102/players/result"
+
+  // form?.submit()
+}
+
 
 export default function FilterPage() {
   const [players, setPlayers] = useState<Player[]>([])
@@ -13,13 +52,13 @@ export default function FilterPage() {
 
   return (
     <>
-      <form action="http://localhost:2102/players/filter" method="post" className="container mt-10">
+      <form id="filterForm" method="POST" className="container mt-10" onSubmit={sendForm}>
         
         {/* Jogador Referência */}
         <section className="my-5">
           <label htmlFor="referencePlayer" className="text-xl"> - Escolha o jogador <span className="underline">referência</span>: </label>
-          <select id="referencePlayer" name="referencePlayer" className="p-1 rounded cursor-pointer">
-            {players.map((pl, index) => <option key={index} value={pl.name.toLowerCase().replaceAll(" ", "-")}> {pl.name} </option>)}
+          <select id="referencePlayer" name="referencePlayer" className="p-1 rounded cursor-pointer border border-gray-300">
+            {players.map((pl, index) => <option key={index} value={index}> {pl.name} </option>)}
           </select>
         </section>
 
@@ -29,16 +68,16 @@ export default function FilterPage() {
          
           <div className="checkboxes-container mt-2">
             <div>
-              <input className="cursor-pointer" type="checkbox" value={players.length} id="allPlayers" name="allPlayers" />
-              <label htmlFor="allPlayers"> Todos </label>
+              <input className="cursor-pointer" type="checkbox" value={players.length} id="otherPlayers" name="otherPlayers" />
+              <label htmlFor="otherPlayers"> Todos </label>
             </div>
             <div className="flex gap-x-5 flex-wrap">
               {
                 players.map((pl, index) => {
                   return (
                     <div key={index}>
-                      <input className="cursor-pointer" type="checkbox" value={index} id={pl.name} name={pl.name}/>
-                      <label className="" htmlFor={pl.name}> {pl.name} </label>
+                      <input className="cursor-pointer" type="checkbox" value={index} id={pl.name} name="otherPlayers"/>
+                      <label className="" htmlFor="otherPlayers"> {pl.name} </label>
                     </div>
                   )
                 })
@@ -52,16 +91,16 @@ export default function FilterPage() {
           <h2 className="text-xl"> - Escolha os <span className="underline">parâmetros</span>: </h2>
           <div className="checkboxes-container mt-2">
             <div>
-              <input className="cursor-pointer" type="checkbox" value={header.length} id="allParams" name="allParams" />
-              <label htmlFor="allParams"> Todos </label>
+              <input className="cursor-pointer" type="checkbox" value={header.length} id="params" name="params" />
+              <label htmlFor="params"> Todos </label>
             </div>
             <div className="flex gap-x-5 flex-wrap">
               {
                 header.slice(2).map((param, index) => {
                   return (
                     <div key={index}>
-                      <input className="cursor-pointer" type="checkbox" value={index} id={param} name={param}/>
-                      <label className="" htmlFor={param}> {param} </label>
+                      <input className="cursor-pointer" type="checkbox" value={index} id={param} name="params"/>
+                      <label className="" htmlFor="params"> {param} </label>
                     </div>
                   )
                 })
@@ -72,8 +111,8 @@ export default function FilterPage() {
 
         {/* Escolha do Algoritmo  */}
         <section className="my-5">
-          <label htmlFor="algorithm" className="text-xl"> - Escolha o <span className="underline">algoritmo</span>: </label>
-          <select id="algorithm" name="algorithm" className="p-1 rounded cursor-pointer">
+          <label htmlFor="algId" className="text-xl"> - Escolha o <span className="underline">algoritmo</span>: </label>
+          <select id="algId" name="algId" className="p-1 rounded cursor-pointer border border-gray-300">
             <option value="0"> Similaridade por Cossenos </option>
             <option value="1"> Distância Euclidiana </option>
             <option value="2"> Similaridade pela Média dos Atributos </option>
