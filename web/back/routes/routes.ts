@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { readFile } from "../functions/file_manipulation"
+import { FilterPlayerRequestBody } from "../interfaces/RequestBody";
 import * as fc from "../functions/other"
 import * as alg from "../functions/algorithms"
-import { z } from "zod"
 
 
 // Dados dos jogadores em forma de string
@@ -12,7 +12,8 @@ const players = fc.generatePlayers(data)
 // Algoritmos de similaridade e distância
 const algorithms = [ alg.simiCos, alg.distEucld, alg.simiMedia ]
 
-let body = {}
+// Variável global que vai guardar o corpo da requisição feita pelo formulário de FILTRO
+let body : FilterPlayerRequestBody
 
 export async function routes(server: FastifyInstance) {
   server.get("/hello", async () => {
@@ -36,7 +37,7 @@ export async function routes(server: FastifyInstance) {
     const referencePlayer = players[idReferencia]
     const otherPlayers = players.filter(pl => pl.name !== referencePlayer.name)
 
-    const results = fc.generateResults(referencePlayer, otherPlayers, choicedAlg)
+    // const results = fc.generateResults(referencePlayer, otherPlayers, choicedAlg)
 
     return results
   })
@@ -47,18 +48,17 @@ export async function routes(server: FastifyInstance) {
   })
 
   server.get("/players/result", async (request, reply) => {
-    
-    reply.redirect("http://localhost:5173/")
-    
-    
+    const referencePlayer = players[body.referencePlayer]
+    const otherPlayers = players.filter((_pl, index) => body.otherPlayers.includes(index))
+    const params = body.params
+    const alg = algorithms[body.algId]
+
+    const results = fc.generateResults(referencePlayer, otherPlayers, alg, params)
+
+    return results
   })
 
-  server.post("/players/filter", async (request) => {
-
-    const data = request.body
-    body = data
-
-  })
+  server.post("/players/filter", async (request) => body = request.body)
 
 
 }

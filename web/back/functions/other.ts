@@ -3,11 +3,14 @@ import Result from "../classes/Result"
 
 type Algorihtm = (attrOne: number[], attrTwo: number[]) => number
 
-export function generateResults(referencePlayer: Player, comparedPlayers: Player[], algorithm: Algorihtm) {
+export function generateResults(referencePlayer: Player, comparedPlayers: Player[], algorithm: Algorihtm, params: number[]) {
   const results: Result[] = []
 
+  const referencePlayerData = referencePlayer.data.filter((_d, index) => params.includes(index))
+
   comparedPlayers.forEach(pl => {
-    const value = algorithm(referencePlayer.data, pl.data)
+    const plData = pl.data.filter((_d, index) => params.includes(index))
+    const value = algorithm(referencePlayerData, plData)
     const result = new Result(referencePlayer, pl, value) 
     results.push(result)
   })
