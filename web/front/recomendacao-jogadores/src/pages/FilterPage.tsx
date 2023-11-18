@@ -33,13 +33,8 @@ const sendForm = async (e: FormEvent) => {
 
   const res = await api.post("/players/filter", requestBody)
 
-  console.log(res)
-
-  window.location.href = "http://localhost:2102/players/result"
-
-  // form?.submit()
+  window.location.href = "http://localhost:5173/players/result"
 }
-
 
 export default function FilterPage() {
   const [players, setPlayers] = useState<Player[]>([])
