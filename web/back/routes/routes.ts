@@ -6,7 +6,7 @@ import * as alg from "../functions/algorithms"
 
 
 // Dados dos jogadores em forma de string
-const data = readFile("./database/", "data.tsv")
+const data = readFile("./database/", "atacantes-2.tsv")
 // Gerando objetos do tipo Player
 const players = fc.generatePlayers(data)
 // Algoritmos de similaridade e distância

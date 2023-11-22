@@ -3,6 +3,34 @@ import Result from "../classes/Result"
 
 type Algorihtm = (attrOne: number[], attrTwo: number[]) => number
 
+function isAlpha(value: string) {
+  const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
+  let isAlpha = false
+
+  for (let i = 0; i < value.length; i++) {
+    let char = value[i]
+
+    let inDigitsList = false
+    
+    for (let j = 0; j < digits.length; j++) {
+      let digit = digits[j]
+
+      if (char === digit) {
+        inDigitsList = true
+        break
+      }
+    }
+
+    if (inDigitsList === false) {
+      isAlpha = true
+      break
+    }
+
+  }
+
+  return isAlpha
+}
+
 export function generateResults(referencePlayer: Player, comparedPlayers: Player[], algorithm: Algorihtm, params: number[]) {
   const results: Result[] = []
 
@@ -25,10 +53,15 @@ export function generatePlayers(data: string[]) {
     const dataPlayer = data[i].split("\t")
     
     const name = dataPlayer[0]
-    const team = dataPlayer[1]
-    const values = dataPlayer.slice(2).map(v => parseFloat(v))
+    const values: number[] = []
+    
+    dataPlayer.slice(1).forEach(dPl => {
+      if (! isAlpha(dPl)) {
+        values.push(parseFloat(dPl))
+      }
+    })
 
-    const pl = new Player(name, team, values)
+    const pl = new Player(name, values)
 
     players.push(pl)
   }

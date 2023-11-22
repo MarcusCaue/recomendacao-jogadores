@@ -38,7 +38,6 @@ export default function Main() {
                   <tr className="" key={index}>
                     <th  className="border border-black" scope="col"> {index + 1} </th>
                     <td className="border border-black p-2" > {pl.name} </td>
-                    <td className="border border-black p-2" > {pl.team} </td>
                     {pl.data.map((d, index) => <td className="border border-black" key={index}> {d} </td>)}
                   </tr>
                 )

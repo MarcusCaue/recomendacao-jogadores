@@ -8,6 +8,7 @@ export function readFile(path: string, filename: string) {
     .replaceAll(" %", "")
     .replaceAll(",", ".")
     .replaceAll(":", "")
+    .replaceAll("\r", "")
     
   return data.split("\n")
 }
