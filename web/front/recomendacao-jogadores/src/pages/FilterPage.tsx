@@ -35,17 +35,6 @@ const sendForm = async (e: FormEvent) => {
   window.location.href = "http://localhost:5173/players/result"
 }
 
-const toggleCheckAll = () => {
-  const checkBoxAll = document.getElementById("params")
-  const checkBoxes = document.querySelectorAll("[name=params]")
-
-  if (checkBoxAll.checked === true) {
-    checkBoxes.forEach(chbox => chbox.checked = true)
-  } else {
-    checkBoxes.forEach(chbox => chbox.checked = false)
-  }
-}
-
 export default function FilterPage() {
   const [players, setPlayers] = useState<Player[]>([])
   const [header, setHeader] = useState<string[]>([])
@@ -73,7 +62,7 @@ export default function FilterPage() {
          
           <div className="checkboxes-container mt-2">
             <div>
-              <input className="cursor-pointer" type="checkbox" value={players.length} id="otherPlayers" name="otherPlayers" />
+              <input className="cursor-pointer" value="-1" type="checkbox" id="otherPlayers" name="otherPlayers" />
               <label htmlFor="otherPlayers"> Todos </label>
             </div>
             <div className="flex gap-x-5 flex-wrap">
@@ -96,7 +85,7 @@ export default function FilterPage() {
           <h2 className="text-xl"> - Escolha os <span className="underline">parâmetros</span>: </h2>
           <div className="checkboxes-container mt-2">
             <div>
-              <input className="cursor-pointer" onClick={toggleCheckAll} type="checkbox" id="params" />
+              <input className="cursor-pointer" value="-1" type="checkbox" id="params" name="params" />
               <label> Todos </label>
             </div>
             <div className="flex gap-x-5 flex-wrap">

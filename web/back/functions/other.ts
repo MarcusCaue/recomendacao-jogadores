@@ -31,6 +31,17 @@ function isAlpha(value: string) {
   return isAlpha
 }
 
+export function sortResults(data: Result[], algName: string) {
+  // Do maior para o menor
+  let sortedResults
+  if (algName === "simiCos" || algName === "simiMedia") {
+    sortedResults = data.sort((a, b) => b.result - a.result)
+  } else {
+    sortedResults = data.sort((a, b) => a.result - b.result)
+  }
+  return sortedResults
+}
+
 export function generateResults(referencePlayer: Player, comparedPlayers: Player[], algorithm: Algorihtm, params: number[]) {
   const results: Result[] = []
 

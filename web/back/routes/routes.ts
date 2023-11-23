@@ -4,9 +4,8 @@ import { FilterPlayerRequestBody } from "../interfaces/RequestBody";
 import * as fc from "../functions/other"
 import * as alg from "../functions/algorithms"
 
-
 // Dados dos jogadores em forma de string
-const data = readFile("./database/", "atacantes-1.tsv")
+const data = readFile("./database/", "atacantes-2.tsv")
 // Gerando objetos do tipo Player
 const players = fc.generatePlayers(data)
 // Algoritmos de similaridade e distância
@@ -24,7 +23,7 @@ export async function routes(server: FastifyInstance) {
 
   // Retorno de jogadores
   server.get("/players", async () => {
-    return players.slice(0, 100)
+    return players
   })
 
   // Retorna o cabeçalho (nome das colunas) da base de dados
@@ -35,14 +34,32 @@ export async function routes(server: FastifyInstance) {
   // Roda um algoritmo dado um jogador de referência, um conjunto de parâmetros e um conjunto de jogadores
   server.get("/players/result", async () => {
     const referencePlayer = players[body.referencePlayer]
-    // const otherPlayers = players.filter((_pl, index) => body.otherPlayers.includes(index))
-    const otherPlayers = players.filter((_pl, index) => index !== body.referencePlayer)
-    const params = body.params
+
+    let otherPlayers
+    // Todos os outros jogadores
+    if (body.otherPlayers.includes(-1)) {
+      otherPlayers = players.filter((_pl, index) => index !== body.referencePlayer)
+    } else {
+      otherPlayers = players.filter((_pl, index) => body.otherPlayers.includes(index))
+    }
+
+    let params
+    // Todos os outros parâmetros
+    if (body.params.includes(-1)) {
+      params = []
+      for (let i = 0; i < players[0].data.length; i++)
+        params.push(i)
+    } else {
+      params = body.params
+    }
+
     const alg = algorithms[body.algId]
-
+    
     const results = fc.generateResults(referencePlayer, otherPlayers, alg, params)
+    const sortedResults = fc.sortResults(new Array(...results), alg.name)
 
-    saveResult("./results/novembro/", "gabigol-cosseno.tsv", results)
+    const fileName = `${referencePlayer.name.toLowerCase().split(" ")[0]}-${alg.name.toLowerCase()}.tsv`
+    saveResult("./results/novembro/", fileName, sortedResults)
 
     return results
   })

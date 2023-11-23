@@ -10,4 +10,6 @@ export default class Result {
     this.comparedPlayer = comparedPlayer
     this.result = result
   }
+
+  public clone() { return new Result(this.referencePlayer, this.comparedPlayer, this.result) } 
 }
