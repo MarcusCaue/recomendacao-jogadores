@@ -1,12 +1,12 @@
 import { FastifyInstance } from "fastify";
-import { readFile } from "../functions/file_manipulation"
+import { readFile, saveResult } from "../functions/file_manipulation"
 import { FilterPlayerRequestBody } from "../interfaces/RequestBody";
 import * as fc from "../functions/other"
 import * as alg from "../functions/algorithms"
 
 
 // Dados dos jogadores em forma de string
-const data = readFile("./database/", "atacantes-2.tsv")
+const data = readFile("./database/", "atacantes-1.tsv")
 // Gerando objetos do tipo Player
 const players = fc.generatePlayers(data)
 // Algoritmos de similaridade e distância
@@ -35,11 +35,14 @@ export async function routes(server: FastifyInstance) {
   // Roda um algoritmo dado um jogador de referência, um conjunto de parâmetros e um conjunto de jogadores
   server.get("/players/result", async () => {
     const referencePlayer = players[body.referencePlayer]
-    const otherPlayers = players.filter((_pl, index) => body.otherPlayers.includes(index))
+    // const otherPlayers = players.filter((_pl, index) => body.otherPlayers.includes(index))
+    const otherPlayers = players.filter((_pl, index) => index !== body.referencePlayer)
     const params = body.params
     const alg = algorithms[body.algId]
 
     const results = fc.generateResults(referencePlayer, otherPlayers, alg, params)
+
+    saveResult("./results/novembro/", "gabigol-cosseno.tsv", results)
 
     return results
   })

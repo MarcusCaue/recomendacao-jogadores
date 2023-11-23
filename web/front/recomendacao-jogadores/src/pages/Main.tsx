@@ -24,7 +24,7 @@ export default function Main() {
       </header>
 
       <section className="overflow-x-auto">
-        <table className="text-center align-middle mt-5">
+        <table className="text-center align-middle mt-5 mx-auto">
           <thead>
             <tr className="">
               <th className="border border-black p-5"> # </th>

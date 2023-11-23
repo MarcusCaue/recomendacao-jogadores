@@ -4,10 +4,9 @@ import { FormEvent, useEffect, useState } from "react"
 
 const sendForm = async (e: FormEvent) => {
   e.preventDefault()
-  const form = document.getElementById("filterForm")
-
+  const form = document.getElementById("filterForm") 
   const referencePlayer = parseInt(form?.querySelector("[name=referencePlayer]")?.value)
-  const otherPlayers = []
+  const otherPlayers : number[] = []
   
   form?.querySelectorAll("[name=otherPlayers]").forEach(item => {
     if (item.checked) {
@@ -15,7 +14,7 @@ const sendForm = async (e: FormEvent) => {
     }
   })
 
-  const params = []
+  const params : number[] = []
   form?.querySelectorAll("[name=params]").forEach(item => {
     if (item.checked) {
       params.push(parseInt(item.value))
@@ -31,9 +30,20 @@ const sendForm = async (e: FormEvent) => {
     algId
   }
 
-  const res = await api.post("/players/filter", requestBody)
+  await api.post("/players/filter", requestBody)
 
   window.location.href = "http://localhost:5173/players/result"
+}
+
+const toggleCheckAll = () => {
+  const checkBoxAll = document.getElementById("params")
+  const checkBoxes = document.querySelectorAll("[name=params]")
+
+  if (checkBoxAll.checked === true) {
+    checkBoxes.forEach(chbox => chbox.checked = true)
+  } else {
+    checkBoxes.forEach(chbox => chbox.checked = false)
+  }
 }
 
 export default function FilterPage() {
@@ -53,7 +63,7 @@ export default function FilterPage() {
         <section className="my-5">
           <label htmlFor="referencePlayer" className="text-xl"> - Escolha o jogador <span className="underline">referência</span>: </label>
           <select id="referencePlayer" name="referencePlayer" className="p-1 rounded cursor-pointer border border-gray-300">
-            {players.map((pl, index) => <option key={index} value={index}> {pl.name} </option>)}
+            { players.map((pl, index) => <option key={index} value={index}> {pl.name} </option>) }
           </select>
         </section>
 
@@ -72,7 +82,7 @@ export default function FilterPage() {
                   return (
                     <div key={index}>
                       <input className="cursor-pointer" type="checkbox" value={index} id={pl.name} name="otherPlayers"/>
-                      <label className="" htmlFor="otherPlayers"> {pl.name} </label>
+                      <label htmlFor="otherPlayers"> {pl.name} </label>
                     </div>
                   )
                 })
@@ -86,8 +96,8 @@ export default function FilterPage() {
           <h2 className="text-xl"> - Escolha os <span className="underline">parâmetros</span>: </h2>
           <div className="checkboxes-container mt-2">
             <div>
-              <input className="cursor-pointer" type="checkbox" value={header.length} id="params" name="params" />
-              <label htmlFor="params"> Todos </label>
+              <input className="cursor-pointer" onClick={toggleCheckAll} type="checkbox" id="params" />
+              <label> Todos </label>
             </div>
             <div className="flex gap-x-5 flex-wrap">
               {
@@ -95,7 +105,7 @@ export default function FilterPage() {
                   return (
                     <div key={index}>
                       <input className="cursor-pointer" type="checkbox" value={index} id={param} name="params"/>
-                      <label className="" htmlFor="params"> {param} </label>
+                      <label htmlFor="params"> {param} </label>
                     </div>
                   )
                 })
