@@ -1,8 +1,11 @@
-import { FastifyInstance } from "fastify";
-import { readFile, saveResult } from "../functions/file_manipulation"
+import { FastifyInstance, FastifyRequest } from "fastify";
+import { readFile, saveResult } from "../functions/file-manipulation"
 import { FilterPlayerRequestBody } from "../interfaces/RequestBody";
 import * as fc from "../functions/other"
 import * as alg from "../functions/algorithms"
+import Result from "../classes/Result";
+
+// ================ VARIÁVEIS GLOBAIS ================ //
 
 // Dados dos jogadores em forma de string
 const data = readFile("./database/", "atacantes-2.tsv")
@@ -13,22 +16,23 @@ const algorithms = [ alg.simiCos, alg.distEucld, alg.simiMedia ]
 
 // Variável global que vai guardar o corpo da requisição feita pelo formulário de FILTRO
 let body : FilterPlayerRequestBody
+// Variável global para armazenar os resultados gerados quando um dos algoritmos é executado
+let results: Result[] = []
+
+// =================================================== //
+
 
 export async function routes(server: FastifyInstance) {
-  server.get("/hello", async () => {
-    return {
-      message: "Olá mundo!"
-    }
-  })
+  // Rota de teste
+  server.get("/hello", async () => { return { message: "Olá mundo!"} })
 
   // Retorno de jogadores
-  server.get("/players", async () => {
-    return players
-  })
+  server.get("/players", async () => players)
 
   // Retorna o cabeçalho (nome das colunas) da base de dados
   server.get("/players/header", async () => {
-    return data[0].replaceAll(".", "").split("\t")
+    const header = data[0].replaceAll(".", "").split("\t")
+    return header
   })
 
   // Roda um algoritmo dado um jogador de referência, um conjunto de parâmetros e um conjunto de jogadores
@@ -55,17 +59,25 @@ export async function routes(server: FastifyInstance) {
 
     const alg = algorithms[body.algId]
     
-    const results = fc.generateResults(referencePlayer, otherPlayers, alg, params)
-    const sortedResults = fc.sortResults(new Array(...results), alg.name)
+    const algResults = fc.generateResults(referencePlayer, otherPlayers, alg, params)
+    
+    results = algResults
 
+    return algResults
+  })
+
+  // Salva os resultados em um arquivo
+  server.post("/players/result/save", async () => {
+
+    const alg = algorithms[body.algId]
+    const referencePlayer = players[body.referencePlayer]
+
+    const sortedResults = fc.sortResults(results, alg.name)
     const fileName = `${referencePlayer.name.toLowerCase().split(" ")[0]}-${alg.name.toLowerCase()}.tsv`
     saveResult("./results/novembro/", fileName, sortedResults)
-
-    return results
   })
 
   // Atribui os dados da requisição do formulário de FILTRO à variável que guarda esses dados
-  server.post("/players/filter", async (request) => body = request.body)
-
+  server.post("/players/filter", async (request: FastifyRequest<{ Body: FilterPlayerRequestBody }>) => body = request.body)
 
 }

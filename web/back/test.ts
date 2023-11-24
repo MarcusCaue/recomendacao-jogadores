@@ -1,5 +1,12 @@
-import { readFile, saveResult } from "./functions/file_manipulation"
-import * as alg from "./functions/algorithms"
-import * as fc from "./functions/other"
+let str = "21.2.1.2s,as90"
 
-fc.getEspecificParams([21, 32, 11], 43, 54, 66, 77, 11, 2102, 33)
+const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
+for (let i = 0; i < str.length; i++) {
+  let char = str[i]
+
+  if (digits.includes(char)) {
+    console.log('\'' + char + "\' É um dígito")
+  } else {
+    console.log('\'' + char + "\' É uma letra")
+  }
+}
